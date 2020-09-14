@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { Component, useState } from "react";
+import { View, Text, StyleSheet, Button } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 const styles = StyleSheet.create({
-  container: {
-    display: "block",
-  },
   nav: {
+    paddingTop: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
     backgroundColor: "#76ba1b",
     flexDirection: "row",
     height: 60,
@@ -18,6 +18,9 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     marginRight: "auto",
   },
+  titleText: {
+    fontSize: 18,
+  },
 });
 
 export class Navbar extends Component {
@@ -27,10 +30,9 @@ export class Navbar extends Component {
         <View style={styles.nav}>
           <Icon style={styles.icons} name="menu" size={25} />
           <View style={styles.title}>
-            <Text>Lab Assignment 2</Text>
+            <Text style={styles.titleText}>Lab Assignment 3</Text>
           </View>
-          <Icon name="search" size={25} />
-          <Icon name="person" size={25} />
+          <Text onPress={this.props.handleSignUp}>Sign Up</Text>
         </View>
       </View>
     );
