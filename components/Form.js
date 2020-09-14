@@ -18,9 +18,9 @@ import DatePicker from "react-native-datepicker";
 class Form extends Component {
   state = {
     username: "",
-    gender: "",
+    gender: "Male",
     country: "",
-    date: "2020-09-15",
+    date: "2020-09-13",
     bio: "",
   };
 
@@ -29,9 +29,9 @@ class Form extends Component {
     console.log(this.state);
     this.setState({
       username: "",
-      gender: "",
+      gender: "Male",
       country: "",
-      date: "2020-09-15",
+      date: "2020-09-13",
       bio: "",
     });
   };
@@ -111,8 +111,6 @@ export default Form;
 const styles = StyleSheet.create({
   container: {
     margin: 20,
-    // justifyContent: "center",
-    // alignItems: "center",
   },
   formField: {
     marginTop: 30,
