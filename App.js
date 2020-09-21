@@ -1,5 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
+import store from "./store";
+
 import {
   StyleSheet,
   Text,
@@ -11,6 +13,7 @@ import {
   Alert,
   TouchableOpacity,
 } from "react-native";
+
 import Home from "./components/Home";
 import NavBar from "./components/Navbar";
 import Form from "./components/Form";
@@ -46,6 +49,28 @@ export default function App() {
     setLastName("");
     setPassword("");
     setEmail("");
+
+    let payload = {
+      firstname: firstname,
+      lastname: lastname,
+      password: password,
+      email: email,
+    };
+
+    if (firstname != "" && lastname != "" && password != "" && email != "") {
+      store.dispatch({
+        type: "REGISTER_SUCCESS",
+        payload: payload,
+      });
+    } else {
+      store.dispatch({
+        type: "REGISTER_FAIL",
+
+      });
+    }
+
+    store.subscribe(() => console.log(store.getState()));
+
     handleModalChange();
   };
 
@@ -119,6 +144,8 @@ export default function App() {
     </View>
   );
 }
+
+store.subscribe(() => console.log(store.getState()));
 
 const styles = StyleSheet.create({
   container: {
