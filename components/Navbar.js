@@ -28,11 +28,11 @@ export class Navbar extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.nav}>
-          <Icon style={styles.icons} name="menu" size={25} />
+          {/* <Icon style={styles.icons} name="menu" size={25} /> */}
           <View style={styles.title}>
-            <Text style={styles.titleText}>Lab Assignment 3</Text>
+            <Text style={styles.titleText}>Lab Assignment 6</Text>
           </View>
-          <Text onPress={this.props.handleSignUp}>Sign Up</Text>
+          {/* <Text onPress={this.props.handleSignUp}>Sign Up</Text> */}
         </View>
       </View>
     );
