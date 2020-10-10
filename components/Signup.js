@@ -9,6 +9,7 @@ import {
   Text,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import * as ImagePicker from "expo-image-picker";
 
 const styles = StyleSheet.create({
   container: {
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    backgroundColor: "blue",
+    backgroundColor: "green",
     padding: 10,
     margin: 10,
   },
@@ -43,7 +44,6 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   modalStyle: {
-    backgroundColor: "grey",
     borderRadius: 5,
     shadowColor: "#000",
     minWidth: 300,
@@ -63,13 +63,36 @@ export default function SignUp({ setshowModal }) {
   const email = useSelector((state) => state.email);
   const password = useSelector((state) => state.password);
   const firstname = useSelector((state) => state.firstname);
-  const lastname = useSelector((state) => state.lastname);
-  const number = useSelector((state) => state.number);
+  const username = useSelector((state) => state.username);
 
   const onSubmit = () => {
     setshowModal(false);
     dispatch({ type: "ON_SUBMIT" });
   };
+
+  let openImagePickerAsync = async () => {
+    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    dispatch({ type: "IMAGE_EDIT", data: pickerResult.uri });
+    // console.log(pickerResult.uri);
+  };
+
+  let openCameraPickerAsync = async () => {
+    let cameraPermission = await ImagePicker.requestCameraPermissionsAsync();
+    if (cameraPermission.granted === false) {
+      alert("permission to access camera is required!");
+    }
+
+    let pickerResult = await ImagePicker.launchCameraAsync();
+    dispatch({ type: "IMAGE_EDIT", data: pickerResult.uri });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.centeredView}>
@@ -78,10 +101,26 @@ export default function SignUp({ setshowModal }) {
           <TextInput
             style={styles.textInput}
             onChangeText={(text) =>
+              dispatch({ type: "FIRSTNAME_EDIT", data: text })
+            }
+            value={firstname}
+            placeholder="Name"
+          />
+          <TextInput
+            style={styles.textInput}
+            onChangeText={(text) =>
               dispatch({ type: "EMAIL_EDIT", data: text })
             }
             value={email}
-            placeholder="Email..."
+            placeholder="Email"
+          />
+          <TextInput
+            style={styles.textInput}
+            onChangeText={(text) =>
+              dispatch({ type: "USERNAME_EDIT", data: text })
+            }
+            value={username}
+            placeholder="Username"
           />
           <TextInput
             style={styles.textInput}
@@ -89,24 +128,20 @@ export default function SignUp({ setshowModal }) {
               dispatch({ type: "PASSWORD_EDIT", data: text })
             }
             value={password}
-            placeholder="Password..."
+            placeholder="Password"
           />
-          <TextInput
-            style={styles.textInput}
-            onChangeText={(text) =>
-              dispatch({ type: "FIRSTNAME_EDIT", data: text })
-            }
-            value={firstname}
-            placeholder="First Name..."
-          />
-          <TextInput
-            style={styles.textInput}
-            onChangeText={(text) =>
-              dispatch({ type: "LASTNAME_EDIT", data: text })
-            }
-            value={lastname}
-            placeholder="Last Name..."
-          />
+          <TouchableOpacity
+            onPress={openImagePickerAsync}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Pick a photo</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={openCameraPickerAsync}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Take a photo</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={() => {

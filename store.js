@@ -5,8 +5,9 @@ import { persistStore, persistReducer } from "redux-persist";
 const initialState = {
   email: "",
   firstname: "",
-  lastname: "",
+  username: "",
   password: "",
+  image: "",
 };
 
 const signUpReducer = (state = initialState, action) => {
@@ -21,10 +22,10 @@ const signUpReducer = (state = initialState, action) => {
         ...state,
         firstname: action.data,
       };
-    case "LASTNAME_EDIT":
+    case "USERNAME_EDIT":
       return {
         ...state,
-        lastname: action.data,
+        username: action.data,
       };
     case "PASSWORD_EDIT":
       return {
@@ -32,10 +33,14 @@ const signUpReducer = (state = initialState, action) => {
         password: action.data,
       };
     case "ON_SUBMIT":
-      Alert.alert(
-        "Form submitted succesfully, Restart app to check redux persist working."
-      );
+      Alert.alert("Signed Up succesfully.");
       return state;
+
+    case "IMAGE_EDIT":
+      return {
+        ...state,
+        image: action.data,
+      };
 
     default:
       return state;
