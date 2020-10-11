@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as ImagePicker from "expo-image-picker";
+import * as Notifications from "expo-notifications";
 
 const styles = StyleSheet.create({
   container: {
@@ -65,8 +66,27 @@ export default function SignUp({ setshowModal }) {
   const firstname = useSelector((state) => state.firstname);
   const username = useSelector((state) => state.username);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     setshowModal(false);
+
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+      }),
+    });
+
+    // Second, call the method
+
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "A new user has been registered.",
+        body: "Please login!",
+      },
+      trigger: null,
+    });
+
     dispatch({ type: "ON_SUBMIT" });
   };
 
